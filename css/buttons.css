@@ -1,0 +1,171 @@
+/* ============================================
+   Button theme: solid dark slate-blue
+   Time Management and Pomodoro Tracker
+
+   Include on every page AFTER the page CSS and icons.css
+   (and before darkmode.css where that is used).
+
+   Rules for this file
+   - One solid colour per button state. No gradients.
+   - Same palette in light and dark mode.
+   - Buttons that had no border get their 1px border from an
+     inset ring (box-shadow) so no button changes size.
+   - Selectors start with "html" so they beat the page CSS
+     without needing !important.
+   ============================================ */
+
+:root {
+    --btn-primary-bg:      #30394B;   /* primary + selected            */
+    --btn-secondary-bg:    #252D3B;   /* secondary + unselected        */
+    --btn-hover-bg:        #3A455A;
+    --btn-active-bg:       #222A38;   /* pressed                       */
+    --btn-text:            #F3F4F6;
+    --btn-text-muted:      #C9CFDA;   /* unselected / secondary label  */
+    --btn-border:          #465166;
+    --btn-border-strong:   #7C8BA6;   /* selected                      */
+
+    --btn-disabled-bg:     #2A2E37;
+    --btn-disabled-text:   #959DAB;
+    --btn-disabled-border: #3A404C;
+
+    --btn-focus:           #4C5FD5;   /* keyboard focus ring on light pages */
+
+    --btn-ring:            inset 0 0 0 1px var(--btn-border);
+    --btn-ring-strong:     inset 0 0 0 1px var(--btn-border-strong);
+    --btn-lift:            0 6px 16px rgba(0, 0, 0, 0.28);   /* neutral hover shadow */
+}
+
+html.dark-mode {
+    --btn-focus: #A3BFFA;             /* keyboard focus ring on dark pages */
+}
+
+/* ============================================
+   1. Primary buttons (main actions)  - #30394B
+   ============================================ */
+html :is(.btn-primary, .login-btn, .register-btn, .btn-apply,
+         .btn-apply-range, .start-btn, .pause-btn, .save-btn) {
+    background: var(--btn-primary-bg);
+    color: var(--btn-text);
+    box-shadow: var(--btn-ring);
+}
+
+/* ============================================
+   2. Secondary / unselected buttons  - #252D3B
+   ============================================ */
+html :is(.btn-outline, .reset-btn, .btn-clear, .logout-btn, .dark-mode-toggle,
+         .task-action-btn, .overview-period-btn, .filter-tab, .mode-btn,
+         .period-btn, .preset-btn) {
+    background: var(--btn-secondary-bg);
+    color: var(--btn-text-muted);
+}
+
+/* Buttons that already have a border: just colour it */
+html :is(.btn-outline, .reset-btn, .btn-clear, .logout-btn, .task-action-btn,
+         .overview-period-btn, .filter-tab, .mode-btn, .preset-btn) {
+    border-color: var(--btn-border);
+}
+
+/* Buttons that have no border: draw it inside (no size change) */
+html :is(.period-btn, .dark-mode-toggle) {
+    box-shadow: var(--btn-ring);
+}
+
+/* ============================================
+   3. Selected buttons  - #30394B + stronger border
+   ============================================ */
+html :is(.filter-tab.active, .mode-btn.active, .overview-period-btn.active,
+         .preset-btn.active) {
+    background: var(--btn-primary-bg);
+    color: var(--btn-text);
+    border-color: var(--btn-border-strong);
+    box-shadow: none;
+}
+html .period-btn.active {
+    background: var(--btn-primary-bg);
+    color: var(--btn-text);
+    box-shadow: var(--btn-ring-strong);
+}
+
+/* ============================================
+   4. Hover  - #3A455A
+   ============================================ */
+html :is(.btn-primary, .login-btn, .register-btn, .btn-apply, .btn-apply-range,
+         .start-btn, .pause-btn, .save-btn, .btn-outline, .reset-btn, .btn-clear,
+         .logout-btn, .dark-mode-toggle, .task-action-btn, .overview-period-btn,
+         .filter-tab, .mode-btn, .period-btn, .preset-btn):hover:not(:disabled) {
+    background: var(--btn-hover-bg);
+    color: var(--btn-text);
+}
+
+/* Neutral lift on the buttons that already rose on hover (replaces coloured glows) */
+html :is(.btn-primary, .login-btn, .register-btn, .start-btn, .pause-btn, .save-btn):hover:not(:disabled) {
+    box-shadow: var(--btn-ring), var(--btn-lift);
+}
+html :is(.btn-apply, .btn-apply-range):hover:not(:disabled) {
+    box-shadow: var(--btn-ring);
+}
+html :is(.mode-btn.active, .filter-tab.active, .overview-period-btn.active,
+         .preset-btn.active):hover:not(:disabled) {
+    border-color: var(--btn-border-strong);
+    box-shadow: none;
+}
+html .period-btn.active:hover:not(:disabled) {
+    box-shadow: var(--btn-ring-strong);
+}
+
+/* ============================================
+   5. Pressed  - #222A38
+   ============================================ */
+html :is(.btn-primary, .login-btn, .register-btn, .btn-apply, .btn-apply-range,
+         .start-btn, .pause-btn, .save-btn, .btn-outline, .reset-btn, .btn-clear,
+         .logout-btn, .dark-mode-toggle, .task-action-btn, .overview-period-btn,
+         .filter-tab, .mode-btn, .period-btn, .preset-btn):active:not(:disabled) {
+    background: var(--btn-active-bg);
+    color: var(--btn-text);
+    transform: none;
+}
+
+/* ============================================
+   6. Disabled  - muted solid, still readable
+   ============================================ */
+html :is(.btn-primary, .login-btn, .register-btn, .btn-apply, .btn-apply-range,
+         .start-btn, .pause-btn, .save-btn, .period-btn, .dark-mode-toggle):disabled {
+    background: var(--btn-disabled-bg);
+    color: var(--btn-disabled-text);
+    box-shadow: inset 0 0 0 1px var(--btn-disabled-border);
+    cursor: not-allowed;
+    opacity: 1;
+    transform: none;
+}
+html :is(.btn-outline, .reset-btn, .btn-clear, .logout-btn, .task-action-btn,
+         .overview-period-btn, .filter-tab, .mode-btn, .preset-btn):disabled {
+    background: var(--btn-disabled-bg);
+    color: var(--btn-disabled-text);
+    border-color: var(--btn-disabled-border);
+    box-shadow: none;
+    cursor: not-allowed;
+    opacity: 1;
+    transform: none;
+}
+
+/* ============================================
+   7. Keyboard focus (visible on light and dark pages)
+   ============================================ */
+html :is(.btn-primary, .login-btn, .register-btn, .btn-apply, .btn-apply-range,
+         .start-btn, .pause-btn, .save-btn, .btn-outline, .reset-btn, .btn-clear,
+         .logout-btn, .dark-mode-toggle, .task-action-btn, .overview-period-btn,
+         .filter-tab, .mode-btn, .period-btn, .preset-btn):focus-visible {
+    outline: 2px solid var(--btn-focus);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   8. Small details
+   ============================================ */
+
+/* Icons follow the button text colour; delete keeps a red hint on hover */
+.task-action-btn .ui-icon { color: inherit; }
+html .task-action-btn.edit:hover   { color: var(--btn-text); }
+html .task-action-btn.delete:hover:not(:disabled) { color: #FC8181; }
+
+/* Pause is the same slate as Start; the icon and label tell them apart */

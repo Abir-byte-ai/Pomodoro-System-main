@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer - Time Management & Pomodoro Tracker</title>
+    <link rel="icon" type="image/png" href="pomodorotablogo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/timer.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2><svg class="ui-icon ui-icon--brand" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#alarm-clock"></use></svg>Pomodoro</h2>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#layout-dashboard"></use></svg></span>
+                <span>Dashboard</span>
+            </a>
+            <a href="tasks.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#list-checks"></use></svg></span>
+                <span>Tasks</span>
+            </a>
+            <a href="timer.html" class="nav-item active">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></span>
+                <span>Timer</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-no-axes-combined"></use></svg></span>
+                <span>Progress</span>
+            </a>
+            <a href="report.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#file-text"></use></svg></span>
+                <span>Reports</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#user-round"></use></svg></div>
+                <div class="user-info">
+                    <p class="user-name">Loading...</p>
+                    <p class="user-email">&nbsp;</p>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#log-out"></use></svg>Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Timer Container -->
+        <div class="timer-container">
+            <!-- Mode Selector -->
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="work" data-duration="25">
+                    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg> Work
+                </button>
+                <button class="mode-btn" data-mode="short-break" data-duration="5">
+                    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#coffee"></use></svg> Short Break
+                </button>
+                <button class="mode-btn" data-mode="long-break" data-duration="15">
+                    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#armchair"></use></svg> Long Break
+                </button>
+            </div>
+
+            <!-- Timer Display -->
+            <div class="timer-display">
+                <div class="timer-circle">
+                    <svg class="timer-svg" width="350" height="350">
+                        <circle class="timer-circle-bg" cx="175" cy="175" r="160"></circle>
+                        <circle class="timer-circle-progress" cx="175" cy="175" r="160" id="timerProgress"></circle>
+                    </svg>
+                    <div class="timer-content">
+                        <div class="timer-time" id="timerDisplay">25:00</div>
+                        <div class="timer-label" id="timerLabel">Focus Time</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timer Controls -->
+            <div class="timer-controls">
+                <button class="control-btn start-btn" id="startBtn">
+                    <span class="btn-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#play"></use></svg></span>
+                    <span class="btn-text">Start</span>
+                </button>
+                <button class="control-btn pause-btn" id="pauseBtn" style="display: none;">
+                    <span class="btn-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#pause"></use></svg></span>
+                    <span class="btn-text">Pause</span>
+                </button>
+                <button class="control-btn reset-btn" id="resetBtn">
+                    <span class="btn-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#rotate-ccw"></use></svg></span>
+                    <span class="btn-text">Reset</span>
+                </button>
+            </div>
+
+            <!-- Session Info -->
+            <div class="session-info">
+                <div class="info-item">
+                    <span class="info-label">Sessions Today:</span>
+                    <span class="info-value" id="sessionsToday">0</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Current Task:</span>
+                    <span class="info-value" id="currentTask">No task selected</span>
+                </div>
+            </div>
+
+            <!-- Task Selector -->
+            <div class="task-selector">
+                <label for="selectTask">Working on:</label>
+                <select id="selectTask" class="task-select">
+                    <option value="">Select a task...</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Settings Card -->
+        <div class="settings-card">
+            <h3>Timer Settings</h3>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label for="workDuration">Work Duration (minutes)</label>
+                    <input type="number" id="workDuration" value="25" min="1" max="60">
+                </div>
+                <div class="setting-item">
+                    <label for="shortBreakDuration">Short Break (minutes)</label>
+                    <input type="number" id="shortBreakDuration" value="5" min="1" max="15">
+                </div>
+                <div class="setting-item">
+                    <label for="longBreakDuration">Long Break (minutes)</label>
+                    <input type="number" id="longBreakDuration" value="15" min="1" max="30">
+                </div>
+                <div class="setting-item">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="autoStartBreaks" checked>
+                        <span>Auto-start breaks</span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="soundEnabled" checked>
+                        <span>Sound notifications</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Sound (Hidden) -->
+    <audio id="notificationSound" preload="auto">
+    
+    </audio>
+
+    <script src="js/icons.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/darkmode.js"></script>
+    <script src="js/profile_button.js"></script>
+</body>
+</html>

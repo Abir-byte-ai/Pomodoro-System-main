@@ -1,0 +1,279 @@
+/* ============================================
+   UI Icons (Lucide)
+   Time Management and Pomodoro Tracker
+   Include on every page AFTER the page CSS
+   (before darkmode.css where that is used).
+
+   Icons come from icons/lucide-sprite.svg:
+     <svg class="ui-icon" aria-hidden="true" focusable="false">
+       <use href="icons/lucide-sprite.svg#timer"></use>
+     </svg>
+   From JavaScript use UIIcons.svg('timer') (js/icons.js).
+
+   Icons are outline-only and take their colour from the
+   surrounding text (currentColor), so they follow light/dark
+   mode automatically unless a rule below sets a colour.
+   ============================================ */
+
+/* ---- Base icon ---- */
+.ui-icon {
+    --ui-icon-size: 1.25em;      /* scales with the surrounding text by default */
+    --ui-icon-stroke: 2;         /* Lucide default; keep consistent everywhere   */
+    width: var(--ui-icon-size);
+    height: var(--ui-icon-size);
+    flex-shrink: 0;
+    display: inline-block;
+    vertical-align: -0.25em;     /* optical alignment next to text (ignored inside flex) */
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--ui-icon-stroke);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;        /* clicks always land on the parent button/link */
+}
+
+/* Size helpers */
+.ui-icon--sm { --ui-icon-size: 16px; }
+.ui-icon--md { --ui-icon-size: 20px; }
+.ui-icon--lg { --ui-icon-size: 24px; }
+.ui-icon--xl { --ui-icon-size: 32px; }
+
+/* Spinner (loader-circle) */
+.ui-icon--spin { animation: ui-icon-spin 1s linear infinite; }
+@keyframes ui-icon-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+    .ui-icon--spin { animation: none; }
+}
+
+/* ============================================
+   Sidebar
+   ============================================ */
+
+/* Brand mark next to "Pomodoro". Not forcing display on h2:
+   the responsive CSS hides .logo h2 on small screens. */
+.logo h2 .ui-icon--brand {
+    --ui-icon-size: 1.05em;
+    margin-right: 8px;
+    vertical-align: -0.2em;
+}
+
+/* Fixed-width icon column so every nav label lines up
+   (emoji widths used to vary). The .icon span is kept because
+   the mobile rule `.nav-item span:not(.icon)` relies on it. */
+.nav-item .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;                /* keeps nav rows the same height as with emoji (54px) */
+    flex-shrink: 0;
+}
+.nav-item .icon .ui-icon { --ui-icon-size: 20px; }
+
+/* Logout: icon sits inline with the label. No display override,
+   the responsive CSS hides .logout-btn on small screens. */
+.logout-btn .ui-icon {
+    --ui-icon-size: 16px;
+    margin-right: 6px;
+    vertical-align: -0.22em;
+}
+
+/* Dark / light mode toggle (button is created by js/darkmode.js) */
+#darkModeToggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+#darkModeToggle .ui-icon { --ui-icon-size: 15px; }
+
+/* ============================================
+   Buttons & links
+   ============================================ */
+
+.btn .ui-icon { --ui-icon-size: 16px; }
+
+.view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.view-all .ui-icon { --ui-icon-size: 16px; }
+
+.back-link .ui-icon { --ui-icon-size: 16px; }
+
+/* ============================================
+   Dashboard / Progress stat cards
+   ============================================ */
+
+.stat-icon .ui-icon { --ui-icon-size: 28px; }
+.stat-icon.blue   { color: #5a67d8; }
+.stat-icon.green  { color: #2f855a; }
+.stat-icon.purple { color: #6b46c1; }
+.stat-icon.orange { color: #c05621; }
+
+html.dark-mode .stat-icon.blue   { color: #a3bffa; }
+html.dark-mode .stat-icon.green  { color: #68d391; }
+html.dark-mode .stat-icon.purple { color: #d6bcfa; }
+html.dark-mode .stat-icon.orange { color: #f6ad55; }
+
+/* Dashboard recent activity */
+.activity-icon .ui-icon { --ui-icon-size: 20px; }
+.activity-icon.work  { color: #5a67d8; }
+.activity-icon.task  { color: #2f855a; }
+.activity-icon.break { color: #c05621; }
+
+html.dark-mode .activity-icon.work  { color: #a3bffa; }
+html.dark-mode .activity-icon.task  { color: #68d391; }
+html.dark-mode .activity-icon.break { color: #f6ad55; }
+
+/* ============================================
+   Tasks
+   ============================================ */
+
+.task-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.task-date .ui-icon { --ui-icon-size: 15px; }
+
+.task-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 46px;
+    min-height: 37px;
+}
+.task-action-btn .ui-icon { --ui-icon-size: 18px; }
+
+.empty-icon {
+    display: flex;
+    justify-content: center;
+    font-size: 0;
+    line-height: 0;
+    color: #a0aec0;
+}
+.empty-icon .ui-icon {
+    --ui-icon-size: 56px;
+    --ui-icon-stroke: 1.25;
+}
+
+/* Modal close (X) */
+.modal-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 6px;
+}
+.modal-close .ui-icon { --ui-icon-size: 24px; }
+html.dark-mode .modal-close:hover { color: #e2e8f0; }
+
+/* ============================================
+   Timer
+   ============================================ */
+
+.mode-btn .ui-icon { --ui-icon-size: 20px; margin: 1px 0; }  /* same button height as with emoji */
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;                /* same control height as with emoji */
+}
+.btn-icon .ui-icon { --ui-icon-size: 22px; }
+
+/* ============================================
+   Progress
+   ============================================ */
+
+.session-icon .ui-icon { --ui-icon-size: 22px; }
+.session-item.work  .session-icon { color: #5a67d8; }
+.session-item.break .session-icon { color: #c05621; }
+
+.pie-empty-msg .ui-icon {
+    --ui-icon-size: 40px;
+    --ui-icon-stroke: 1.5;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.goal-value .ui-icon {
+    --ui-icon-size: 1em;
+    vertical-align: -0.12em;
+    margin: 1px 0 1px 2px;
+}
+
+.preset-btn .ui-icon {
+    --ui-icon-size: 16px;
+    vertical-align: -0.22em;
+    margin-right: 2px;
+}
+
+#goalsModal .form-group label .ui-icon {
+    --ui-icon-size: 16px;
+    vertical-align: -0.22em;
+    margin-right: 4px;
+}
+
+/* ============================================
+   Reports
+   ============================================ */
+
+.summary-icon { color: #5a67d8; }
+.summary-icon .ui-icon { --ui-icon-size: 28px; }
+
+.insight-icon .ui-icon { --ui-icon-size: 24px; }
+.insight-item.positive .insight-icon { color: #2f855a; }
+.insight-item.info     .insight-icon { color: #5a67d8; }
+.insight-item.warning  .insight-icon { color: #c05621; }
+
+/* Inline error line in the report chart area */
+.report-error {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.report-error .ui-icon { --ui-icon-size: 18px; }
+
+/* ============================================
+   Login / Register password toggle
+   (login.css / register.css remove the focus outline,
+   so give keyboard users a visible one back)
+   ============================================ */
+
+.toggle-password .ui-icon { --ui-icon-size: 20px; }
+.toggle-password:focus-visible {
+    outline: 2px solid var(--btn-focus, #4C5FD5);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* ============================================
+   Keyboard focus for icon-only buttons
+   ============================================ */
+
+.modal-close:focus-visible {
+    outline: 2px solid var(--btn-focus, #4C5FD5);
+    outline-offset: 2px;
+}
+
+/* ============================================
+   Login / Register header badge
+   ============================================ */
+
+.auth-header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 14px;
+    border-radius: 50%;
+    background: var(--btn-secondary-bg, #252D3B);
+    border: 1px solid var(--btn-border, #465166);
+    color: var(--btn-text, #F3F4F6);
+}
+.auth-header-icon .ui-icon { --ui-icon-size: 26px; }
+
+/* Avatar placeholder (shown until the user's initial loads) */
+.user-avatar .ui-icon { --ui-icon-size: 20px; }

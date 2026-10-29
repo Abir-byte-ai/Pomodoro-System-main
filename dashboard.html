@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Time Management & Pomodoro Tracker</title>
+    <link rel="icon" type="image/png" href="pomodorotablogo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2><svg class="ui-icon ui-icon--brand" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#alarm-clock"></use></svg>Pomodoro</h2>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item active">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#layout-dashboard"></use></svg></span>
+                <span>Dashboard</span>
+            </a>
+            <a href="tasks.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#list-checks"></use></svg></span>
+                <span>Tasks</span>
+            </a>
+            <a href="timer.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></span>
+                <span>Timer</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-no-axes-combined"></use></svg></span>
+                <span>Progress</span>
+            </a>
+            <a href="report.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#file-text"></use></svg></span>
+                <span>Reports</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#user-round"></use></svg></div>
+                <div class="user-info">
+                    <p class="user-name">Loading...</p>
+                    <p class="user-email">&nbsp;</p>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#log-out"></use></svg>Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Dashboard</h1>
+                <p class="current-date" id="currentDate"></p>
+            </div>
+            <div class="header-right">
+                <div class="quick-action">
+                    <button class="btn btn-primary" id="startTimerBtn">
+                        <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#play"></use></svg> Start Timer
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></div>
+                <div class="stat-info">
+                    <p class="stat-label">Today's Sessions</p>
+                    <h3 class="stat-value" id="todaySessions">0</h3>
+                    <span class="stat-change neutral" id="sessionChange">Loading...</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#circle-check"></use></svg></div>
+                <div class="stat-info">
+                    <p class="stat-label">Tasks Completed</p>
+                    <h3 class="stat-value" id="tasksCompleted">0</h3>
+                    <span class="stat-change neutral" id="taskChange">Loading...</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#clock"></use></svg></div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Minutes</p>
+                    <h3 class="stat-value" id="totalMinutes">0</h3>
+                    <span class="stat-change neutral" id="minutesLabel">This week</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#flame"></use></svg></div>
+                <div class="stat-info">
+                    <p class="stat-label">Current Streak</p>
+                    <h3 class="stat-value" id="currentStreak">0</h3>
+                    <span class="stat-change positive" id="streakLabel">Days</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Today's Tasks -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Today's Tasks</h3>
+                    <a href="tasks.html" class="view-all">View All <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+                </div>
+                <div class="card-body">
+                    <div id="todayTasksList" class="task-list">
+                        <div class="sk-wrap" aria-busy="true"><span class="sr-only">Loading tasks...</span><div class="sk-row"><span class="skeleton sk-box"></span><span class="skeleton sk-line sk-w70"></span></div><div class="sk-row"><span class="skeleton sk-box"></span><span class="skeleton sk-line sk-w70"></span></div><div class="sk-row"><span class="skeleton sk-box"></span><span class="skeleton sk-line sk-w70"></span></div></div>
+                    </div>
+                    <button class="btn btn-outline btn-block" onclick="window.location.href='tasks.html'">
+                        <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#plus"></use></svg> Add New Task
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Recent Activity</h3>
+                    <a href="progress.html" class="view-all">View All <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#arrow-right"></use></svg></a>
+                </div>
+                <div class="card-body">
+                    <div class="activity-list">
+                        <div class="sk-wrap" aria-busy="true"><span class="sr-only">Loading activity...</span><div class="sk-row"><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-line sk-w30"></span></div></div><div class="sk-row"><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-line sk-w30"></span></div></div><div class="sk-row"><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-line sk-w30"></span></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weekly Overview Chart -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Weekly Overview</h3>
+                <div style="display:flex; gap:8px;">
+                    <button class="overview-period-btn active" data-period="weekly"
+                        style="padding:6px 16px; border-radius:8px; border-width:2px; border-style:solid;
+                            
+                            font-weight:600; font-size:13px; cursor:pointer;">
+                        Weekly
+                    </button>
+                    <button class="overview-period-btn" data-period="monthly"
+                        style="padding:6px 16px; border-radius:8px; border-width:2px; border-style:solid;
+                            
+                            font-weight:600; font-size:13px; cursor:pointer;">
+                        Monthly
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div style="position:relative; height:280px; width:100%;">
+                    <canvas id="overviewLineChart" style="display:block;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/darkmode.js"></script>
+    <script src="js/profile_button.js"></script>
+</body>
+</html>

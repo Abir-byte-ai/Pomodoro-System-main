@@ -1,0 +1,392 @@
+/* ============================================
+   Timer Page Styles
+   Time Management and Pomodoro Tracker
+   ============================================ */
+
+.timer-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/*  ============================================
+    Mode Selector 
+    ============================================*/
+
+.mode-selector {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.mode-btn {
+    padding: 12px 24px;
+    background: var(--btn-secondary-bg);
+    border: 2px solid var(--btn-border);
+    border-radius: 12px;
+    color: var(--btn-text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mode-btn:hover {
+    border-color: var(--btn-border);
+    color: var(--btn-text);
+    transform: translateY(-2px);
+}
+
+.mode-btn.active {
+    background: var(--btn-primary-bg);
+    color: var(--btn-text);
+    border-color: var(--btn-border-strong);
+    box-shadow: none;
+}
+
+.mode-btn span {
+    font-size: 18px;
+}
+
+/*  ============================================
+    Timer Display
+    ============================================ */
+
+.timer-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.timer-circle {
+    position: relative;
+    width: 350px;
+    height: 350px;
+}
+
+.timer-svg {
+    transform: rotate(-90deg);
+}
+
+.timer-circle-bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 12;
+}
+
+.timer-circle-progress {
+    fill: none;
+    stroke: #5a67d8;
+    stroke-width: 12;
+    stroke-linecap: round;
+    stroke-dasharray: 1005;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.timer-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.timer-time {
+    font-size: 72px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 10px;
+    font-family: 'Segoe UI', monospace;
+}
+
+.timer-label {
+    font-size: 18px;
+    color: #718096;
+    font-weight: 500;
+}
+
+/*  ============================================
+    Timer Controls 
+    ============================================*/
+
+.timer-controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.control-btn {
+    padding: 16px 40px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.start-btn,
+.pause-btn {
+    background: var(--btn-primary-bg);
+    color: var(--btn-text);
+    flex: 1;
+    max-width: 200px;
+    justify-content: center;
+}
+
+.start-btn:hover,
+.pause-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.pause-btn {
+    background: var(--btn-primary-bg);
+}
+
+.pause-btn:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.reset-btn {
+    background: var(--btn-secondary-bg);
+    border: 2px solid var(--btn-border);
+    color: var(--btn-text-muted);
+}
+
+.reset-btn:hover {
+    border-color: var(--btn-border);
+    color: var(--btn-text);
+}
+
+.btn-icon {
+    font-size: 20px;
+}
+
+.btn-text {
+    font-size: 16px;
+}
+
+/*  ============================================
+    Session Info 
+    ============================================*/
+
+.session-info {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.info-item {
+    text-align: center;
+}
+
+.info-label {
+    display: block;
+    font-size: 14px;
+    color: #718096;
+    margin-bottom: 8px;
+}
+
+.info-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+/*  ============================================
+    Task Selector 
+    ============================================*/
+
+.task-selector {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+.task-selector label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 10px;
+}
+
+.task-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.task-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/*  ============================================
+    Settings Card 
+    ============================================*/
+
+.settings-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.settings-card h3 {
+    font-size: 20px;
+    color: #2d3748;
+    margin-bottom: 25px;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.setting-item label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+.setting-item input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.setting-item input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.checkbox-label {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.checkbox-label span {
+    font-size: 14px;
+    color: #4a5568;
+}
+
+svg defs {
+    display: none;
+}
+
+/*  ============================================
+    Timer States
+    ============================================ */
+
+.timer-running .timer-time {
+    color: #48bb78;
+}
+
+.timer-paused .timer-time {
+    color: #f6ad55;
+}
+
+.timer-break .timer-time {
+    color: #667eea;
+}
+
+/*  ============================================
+    Animations
+    ============================================ */
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+.timer-running .timer-content {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/*  ============================================ 
+    Responsive 
+    ============================================*/
+    
+@media (max-width: 768px) {
+    .timer-circle {
+        width: 280px;
+        height: 280px;
+    }
+
+    .timer-svg {
+        width: 280px;
+        height: 280px;
+    }
+
+    .timer-time {
+        font-size: 56px;
+    }
+
+    .mode-selector {
+        flex-wrap: wrap;
+    }
+
+    .timer-controls {
+        flex-direction: column;
+    }
+
+    .control-btn {
+        max-width: 100%;
+    }
+
+    .session-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+}

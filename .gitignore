@@ -1,0 +1,18 @@
+
+# Local database credentials
+/php/config.php
+.env
+.env.*
+
+# Private notes and passwords
+*Pswd.txt
+*Password.txt
+
+# Local database dumps (keep the setup schema)
+/database/*.sql
+!/database/setup.sql
+
+# Dependencies and generated files
+/node_modules/
+/.venv/
+__pycache__/

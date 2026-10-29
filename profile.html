@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Time Management & Pomodoro Tracker</title>
+    <link rel="icon" type="image/png" href="pomodorotablogo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <style>
+        /* ---- Profile Page Styles ---- */
+        .profile-container {
+            max-width: 560px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .profile-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+
+        .profile-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        /* Avatar section */
+        .avatar-section {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 28px;
+        }
+
+        .avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+            transition: background 0.3s;
+        }
+
+        .avatar-info h4 { font-size: 15px; color: #4a5568; margin-bottom: 4px; }
+        .avatar-info p  { font-size: 13px; color: #718096; }
+
+        /* Colour picker */
+        .color-grid {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .color-swatch {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: transform 0.15s, border-color 0.15s;
+        }
+        .color-swatch:hover { transform: scale(1.15); }
+        .color-swatch.selected { border-color: #2d3748; transform: scale(1.1); }
+
+        /* Form */
+        .profile-form-group { margin-bottom: 20px; }
+        .profile-form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 6px;
+        }
+        .profile-form-group input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+        .profile-form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.12);
+        }
+        .profile-form-group input:disabled {
+            background: #f7fafc;
+            color: #718096;
+            cursor: not-allowed;
+        }
+
+        .profile-alert {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .profile-alert.show { display: block; }
+        .profile-alert.success { background: #c6f6d5; color: #22543d; border: 1px solid #9ae6b4; }
+        .profile-alert.error   { background: #fed7d7; color: #742a2a; border: 1px solid #fc8181; }
+
+        .save-btn {
+            padding: 11px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--btn-primary-bg);
+            color: var(--btn-text);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .save-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.28); }
+        .save-btn:disabled { cursor: not-allowed; }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #667eea;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-bottom: 8px;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        .email-note { font-size: 12px; color: #a0aec0; margin-top: 4px; }
+
+        /* Dark mode overrides for profile cards */
+        .dark-mode .profile-card {
+            background: #2d3748;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+        .dark-mode .profile-card h3 { color: #e2e8f0; border-bottom-color: #4a5568; }
+        .dark-mode .profile-form-group label { color: #cbd5e0; }
+        .dark-mode .profile-form-group input {
+            background: #1a202c;
+            border-color: #4a5568;
+            color: #e2e8f0;
+        }
+        .dark-mode .profile-form-group input:disabled { background: #1a202c; color: #718096; }
+        .dark-mode .avatar-info h4 { color: #cbd5e0; }
+        .dark-mode .avatar-info p  { color: #a0aec0; }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo"><h2><svg class="ui-icon ui-icon--brand" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#alarm-clock"></use></svg>Pomodoro</h2></div>
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item"><span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#layout-dashboard"></use></svg></span><span>Dashboard</span></a>
+            <a href="tasks.html"     class="nav-item"><span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#list-checks"></use></svg></span><span>Tasks</span></a>
+            <a href="timer.html"     class="nav-item"><span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></span><span>Timer</span></a>
+            <a href="progress.html"  class="nav-item"><span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-no-axes-combined"></use></svg></span><span>Progress</span></a>
+            <a href="report.html"    class="nav-item"><span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#file-text"></use></svg></span><span>Reports</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar" id="sidebarAvatar"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#user-round"></use></svg></div>
+                <div class="user-info">
+                    <p class="user-name"  id="sidebarName">Loading...</p>
+                    <p class="user-email" id="sidebarEmail"></p>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#log-out"></use></svg>Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header class="header">
+            <div class="header-left">
+                <a href="dashboard.html" class="back-link"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#arrow-left"></use></svg> Back to Dashboard</a>
+                <h1>My Profile</h1>
+            </div>
+        </header>
+
+        <div class="profile-container">
+
+            <!-- Avatar colour picker -->
+            <div class="profile-card">
+                <h3>Profile Picture</h3>
+                <div class="avatar-section">
+                    <div class="avatar-large" id="previewAvatar">A</div>
+                    <div class="avatar-info">
+                        <h4>Choose your avatar colour</h4>
+                        <p>Your avatar uses your initial with a colour background.</p>
+                    </div>
+                </div>
+                <div class="profile-alert" id="avatarAlert"></div>
+                <div class="color-grid" id="colorGrid">
+                    <!-- swatches injected by JS -->
+                </div>
+                <br>
+                <button class="save-btn" id="saveAvatarBtn">Save Colour</button>
+            </div>
+
+            <!-- Edit name -->
+            <div class="profile-card">
+                <h3>Account Details</h3>
+                <div class="profile-alert" id="nameAlert"></div>
+                <div class="profile-form-group">
+                    <label for="displayName">Display Name</label>
+                    <input type="text" id="displayName" placeholder="Your name" maxlength="100">
+                </div>
+                <div class="profile-form-group">
+                    <label for="displayEmail">Email Address</label>
+                    <input type="email" id="displayEmail" disabled>
+                    <p class="email-note">Email cannot be changed. Contact support if needed.</p>
+                </div>
+                <button class="save-btn" id="saveNameBtn">Save Changes</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/icons.js"></script>
+    <script src="js/darkmode.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

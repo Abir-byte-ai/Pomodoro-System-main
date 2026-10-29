@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Time Management & Pomodoro Tracker</title>
+    <link rel="icon" type="image/png" href="pomodorotablogo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/report.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2><svg class="ui-icon ui-icon--brand" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#alarm-clock"></use></svg>Pomodoro</h2>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#layout-dashboard"></use></svg></span>
+                <span>Dashboard</span>
+            </a>
+            <a href="tasks.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#list-checks"></use></svg></span>
+                <span>Tasks</span>
+            </a>
+            <a href="timer.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></span>
+                <span>Timer</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-no-axes-combined"></use></svg></span>
+                <span>Progress</span>
+            </a>
+            <a href="report.html" class="nav-item active">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#file-text"></use></svg></span>
+                <span>Reports</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#user-round"></use></svg></div>
+                <div class="user-info">
+                    <p class="user-name">Loading...</p>
+                    <p class="user-email">&nbsp;</p>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#log-out"></use></svg>Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Productivity Reports</h1>
+                <p class="current-date" id="currentDate"></p>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-primary" id="generateReportBtn">
+                    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-column"></use></svg> Generate Report
+                </button>
+                <button class="btn btn-outline" id="exportReportBtn">
+                    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#download"></use></svg> Export
+                </button>
+            </div>
+        </header>
+
+        <!-- Report Period Selector -->
+        <div class="report-period-selector">
+            <div class="period-input-group">
+                <label for="startDate">From:</label>
+                <input type="date" id="startDate" class="date-input">
+            </div>
+            <div class="period-input-group">
+                <label for="endDate">To:</label>
+                <input type="date" id="endDate" class="date-input">
+            </div>
+            <button class="btn btn-primary btn-sm" id="applyPeriodBtn">Apply</button>
+        </div>
+
+        <!-- Report Summary Cards -->
+        <div class="report-summary">
+            <div class="summary-card">
+                <div class="summary-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></div>
+                <div class="summary-content">
+                    <p class="summary-label">Total Pomodoro Sessions</p>
+                    <h2 class="summary-value" id="reportSessions">&ndash;</h2>
+                    <span class="summary-period" id="sessionsPeriod">Loading...</span>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#clock"></use></svg></div>
+                <div class="summary-content">
+                    <p class="summary-label">Total Focus Time</p>
+                    <h2 class="summary-value" id="reportFocusTime">&ndash;</h2>
+                    <span class="summary-period" id="focusPeriod">—</span>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#circle-check"></use></svg></div>
+                <div class="summary-content">
+                    <p class="summary-label">Tasks Completed</p>
+                    <h2 class="summary-value" id="reportTasks">&ndash;</h2>
+                    <span class="summary-period" id="tasksPeriod">—</span>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-no-axes-combined"></use></svg></div>
+                <div class="summary-content">
+                    <p class="summary-label">Productivity Score</p>
+                    <h2 class="summary-value" id="reportScore">&ndash;</h2>
+                    <span class="summary-period" id="scorePeriod">Active days ratio</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Productivity This Week -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Productivity This Week</h3>
+                <span class="info-badge">Most productive: —</span>
+            </div>
+            <div class="card-body">
+                <p id="weekRangeLabel" style="color:#718096; font-size:13px; margin-bottom:16px;"></p>
+                <div style="position:relative; height:350px; width:100%;">
+                    <canvas id="weekBarChart" style="display:block;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Task Performance -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Task Performance Summary</h3>
+            </div>
+            <div class="card-body">
+                <div class="performance-grid">
+                    <div class="performance-item" aria-busy="true"><span class="sr-only">Loading task performance...</span><div class="sk-col"><span class="skeleton sk-line lg sk-w50"></span><span class="skeleton sk-line sk-w90"></span><span class="skeleton sk-line sk-w70"></span></div></div><div class="performance-item" aria-busy="true"><div class="sk-col"><span class="skeleton sk-line lg sk-w50"></span><span class="skeleton sk-line sk-w90"></span><span class="skeleton sk-line sk-w70"></span></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insights & Recommendations -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Insights & Recommendations</h3>
+            </div>
+            <div class="card-body">
+                <div class="insights-list">
+                    <div class="sk-row" aria-busy="true"><span class="sr-only">Loading insights...</span><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w30"></span><span class="skeleton sk-line sk-w90"></span></div></div><div class="sk-row" aria-busy="true"><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w30"></span><span class="skeleton sk-line sk-w90"></span></div></div><div class="sk-row" aria-busy="true"><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w30"></span><span class="skeleton sk-line sk-w90"></span></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="js/report.js"></script>
+    <script src="js/darkmode.js"></script>
+    <script src="js/profile_button.js"></script>
+</body>
+</html>

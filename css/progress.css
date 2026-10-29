@@ -1,0 +1,598 @@
+/* ============================================
+   Progress Page Styles
+   Time Management and Pomodoro Tracker
+   ============================================ */
+
+/*  ============================================
+    Period Selector
+    ============================================ */
+
+.period-selector {
+    display: flex;
+    gap: 8px;
+    background: white;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.period-btn {
+    padding: 10px 20px;
+    background: var(--btn-secondary-bg);
+    border: none;
+    border-radius: 8px;
+    color: var(--btn-text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.period-btn:hover {
+    background: var(--btn-hover-bg);
+}
+
+.period-btn.active {
+    background: var(--btn-primary-bg);
+    color: var(--btn-text);
+}
+
+/*  ============================================
+    Chart Controls 
+    ============================================*/
+
+.chart-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.chart-select,
+.session-filter {
+    padding: 8px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.chart-select:focus,
+.session-filter:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/*  ============================================
+    Progress Chart
+    ============================================ */
+
+.progress-chart {
+    padding: 20px;
+}
+
+.simple-chart {
+    position: relative;
+    height: 300px;
+    margin-top: 20px;
+}
+
+.chart-line {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-bottom: 2px solid #e2e8f0;
+    border-left: 2px solid #e2e8f0;
+}
+
+.chart-point {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #667eea;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+}
+
+.chart-point:hover {
+    transform: scale(1.5);
+    box-shadow: 0 0 0 8px rgba(102, 126, 234, 0.2);
+}
+
+.chart-point::after {
+    content: attr(data-value) " min";
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2d3748;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.chart-point:hover::after {
+    opacity: 1;
+}
+
+.chart-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding: 0 10px;
+}
+
+.chart-labels span {
+    font-size: 13px;
+    color: #718096;
+    font-weight: 500;
+}
+
+/*  ============================================
+    Session List 
+    ============================================ */
+
+.session-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.session-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f7fafc;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.session-item:hover {
+    background: #edf2f7;
+    transform: translateX(5px);
+}
+
+.session-item.work {
+    border-left-color: #667eea;
+}
+
+.session-item.break {
+    border-left-color: #f6ad55;
+}
+
+.session-icon {
+    width: 45px;
+    height: 45px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.session-info {
+    flex: 1;
+}
+
+.session-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 4px;
+}
+
+.session-time {
+    font-size: 13px;
+    color: #718096;
+}
+
+.session-duration {
+    font-size: 16px;
+    font-weight: 700;
+    color: #667eea;
+    background: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+/*  ============================================
+    Goals Grid 
+    ============================================*/
+
+.goals-grid {
+    display: grid;
+    gap: 25px;
+}
+
+.goal-item {
+    padding: 20px;
+    background: #f7fafc;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.goal-item:hover {
+    background: #edf2f7;
+}
+
+.goal-item.completed {
+    background: #e6f9f0;
+}
+
+.goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.goal-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.goal-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.goal-item.completed .goal-value {
+    color: #48bb78;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.progress-fill.success {
+    background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+}
+
+.goal-status {
+    font-size: 13px;
+    color: #718096;
+    margin-top: 5px;
+}
+
+.goal-status.success {
+    color: #48bb78;
+    font-weight: 600;
+}
+
+/*  ============================================
+    Filter Options 
+    ============================================*/
+
+.filter-options {
+    display: flex;
+    gap: 10px;
+}
+
+/*  ============================================
+    Scrollbar Styling 
+    ============================================*/
+
+.session-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.session-list::-webkit-scrollbar-track {
+    background: #f7fafc;
+    border-radius: 10px;
+}
+
+.session-list::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 10px;
+}
+
+.session-list::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+}
+
+/*  ============================================
+    Responsive 
+    ============================================*/
+
+@media (max-width: 768px) {
+    .period-selector {
+        width: 100%;
+    }
+
+    .period-btn {
+        flex: 1;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    .chart-labels {
+        font-size: 11px;
+    }
+
+    .session-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .session-duration {
+        align-self: flex-end;
+    }
+
+    .goals-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*  ============================================
+    Date range row 
+    ============================================*/
+
+.chart-date-range {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 15px 20px;
+    background: #f7fafc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.chart-date-range label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.chart-date-range input[type="date"] {
+    padding: 8px 12px;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: white;
+    transition: border-color 0.2s;
+}
+
+.chart-date-range input[type="date"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.btn-apply-range {
+    padding: 10px 20px;
+    background: var(--btn-primary-bg);
+    color: var(--btn-text);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+}
+
+.btn-apply-range:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+/*  ============================================
+    Pie chart wrapper 
+    ============================================*/
+
+.pie-chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px 20px;
+}
+
+.pie-canvas-container {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+}
+
+/*  ============================================
+    Empty state message 
+    ============================================*/
+
+.pie-empty-msg {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 15px;
+    padding: 40px 20px;
+    display: none;
+}
+
+.pie-empty-msg span {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.pie-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+    margin-top: 25px;
+}
+
+.pie-stat-item {
+    background: #f7fafc;
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    border-top: 4px solid transparent;
+    transition: transform 0.2s;
+}
+
+.pie-stat-item:hover {
+    transform: translateY(-2px);
+}
+
+.pie-stat-item.work-stat       { border-top-color: #667eea; }
+.pie-stat-item.short-stat      { border-top-color: #f6ad55; }
+.pie-stat-item.long-stat       { border-top-color: #fc8181; }
+
+.pie-stat-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.pie-stat-dot.work-dot  { background: #667eea; }
+.pie-stat-dot.short-dot { background: #f6ad55; }
+.pie-stat-dot.long-dot  { background: #fc8181; }
+
+.pie-stat-label {
+    font-size: 12px;
+    color: #718096;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+
+.pie-stat-time {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 2px;
+}
+
+.pie-stat-pct {
+    font-size: 13px;
+    color: #a0aec0;
+}
+
+@media (max-width: 768px) {
+    .chart-date-range {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-apply-range {
+        width: 100%;
+    }
+
+    .pie-stats-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   Goals Modal - Add to progress.css (bottom)
+   ============================================ */
+
+/* Preset buttons */
+.preset-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 12px 10px;
+    background: var(--btn-secondary-bg);
+    border: 2px solid var(--btn-border);
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--btn-text-muted);
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.6;
+    transition: all 0.2s ease;
+}
+
+.preset-btn:hover {
+    border-color: var(--btn-border);
+    background: var(--btn-hover-bg);
+    color: var(--btn-text);
+}
+
+.preset-btn.active {
+    border-color: var(--btn-border-strong);
+    background: var(--btn-primary-bg);
+    color: var(--btn-text);
+}
+
+.preset-btn small {
+    display: block;
+    font-size: 11px;
+    opacity: 0.8;
+    margin-top: 2px;
+}
+
+/* Goals form group label */
+#goalsModal .form-group {
+    margin-bottom: 20px;
+}
+
+#goalsModal .form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+}
+
+#goalsModal input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Success toast notification */
+.goals-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #2d3748;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.goals-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}

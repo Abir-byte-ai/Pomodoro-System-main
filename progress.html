@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress - Time Management & Pomodoro Tracker</title>
+    <link rel="icon" type="image/png" href="pomodorotablogo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/progress.css">
+    <link rel="stylesheet" href="css/tasks.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2><svg class="ui-icon ui-icon--brand" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#alarm-clock"></use></svg>Pomodoro</h2>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#layout-dashboard"></use></svg></span>
+                <span>Dashboard</span>
+            </a>
+            <a href="tasks.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#list-checks"></use></svg></span>
+                <span>Tasks</span>
+            </a>
+            <a href="timer.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></span>
+                <span>Timer</span>
+            </a>
+            <a href="progress.html" class="nav-item active">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-no-axes-combined"></use></svg></span>
+                <span>Progress</span>
+            </a>
+            <a href="report.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#file-text"></use></svg></span>
+                <span>Reports</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#user-round"></use></svg></div>
+                <div class="user-info">
+                    <p class="user-name">Loading...</p>
+                    <p class="user-email">&nbsp;</p>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#log-out"></use></svg>Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Progress Tracker</h1>
+                <p class="current-date" id="currentDate"></p>
+            </div>
+            <div class="header-right">
+                <div class="period-selector">
+                    <button class="period-btn active" data-period="daily">Daily</button>
+                    <button class="period-btn" data-period="weekly">Weekly</button>
+                    <button class="period-btn" data-period="monthly">Monthly</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon blue"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></div>
+                <div class="stat-info">
+                    <p class="stat-label">Total Sessions</p>
+                    <h3 class="stat-value" id="totalSessions">&ndash;</h3>
+                    <span class="stat-change neutral" id="sessionChangeLabel">Loading...</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#circle-check"></use></svg></div>
+                <div class="stat-info">
+                    <p class="stat-label">Completed Tasks</p>
+                    <h3 class="stat-value" id="completedTasks">&ndash;</h3>
+                    <span class="stat-change neutral" id="taskChangeLabel">Loading...</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon purple"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#clock"></use></svg></div>
+                <div class="stat-info">
+                    <p class="stat-label">Focus Time</p>
+                    <h3 class="stat-value" id="focusTime">&ndash;</h3>
+                    <span class="stat-change neutral" id="avgChangeLabel">Loading...</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#target"></use></svg></div>
+                <div class="stat-info">
+                    <p class="stat-label">Daily Average</p>
+                    <h3 class="stat-value" id="dailyAverage">&ndash;</h3>
+                    <span class="stat-change positive">Minutes per day</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Chart -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Productivity Trend</h3>
+                <div class="chart-controls">
+                    <select id="chartPeriod" class="chart-select">
+                        <option value="7">Last 7 Days</option>
+                        <option value="14">Last 14 Days</option>
+                        <option value="30">Last 30 Days</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- Date Range Selector -->
+                <div class="chart-date-range">
+                    <div>
+                        <label for="progressStartDate">From:</label>
+                        <input type="date" id="progressStartDate">
+                    </div>
+                    <div>
+                        <label for="progressEndDate">To:</label>
+                        <input type="date" id="progressEndDate">
+                    </div>
+                    <button class="btn-apply-range" id="applyDateRange">Apply</button>
+                </div>
+
+                <!-- Pie Chart -->
+                <div class="pie-chart-wrapper">
+                    <div class="pie-canvas-container" style="position:relative; width:100%; max-width:380px; height:320px; margin:0 auto;">
+                        <canvas id="productivityPieChart" style="display:block;"></canvas>
+                        <div class="pie-empty-msg" id="pieEmptyMsg">
+                            <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-pie"></use></svg>
+                            No session data for this period yet.
+                        </div>
+                    </div>
+                    <!-- Stats below pie -->
+                    <div class="pie-stats-row">
+                        <div class="pie-stat-item work-stat">
+                            <div class="pie-stat-label">
+                                <span class="pie-stat-dot work-dot"></span>Focus Time
+                            </div>
+                            <div class="pie-stat-time" id="pieWorkTimeVal">0m</div>
+                            <div class="pie-stat-pct"  id="pieWorkTimePct">0%</div>
+                        </div>
+                        <div class="pie-stat-item short-stat">
+                            <div class="pie-stat-label">
+                                <span class="pie-stat-dot short-dot"></span>Short Break
+                            </div>
+                            <div class="pie-stat-time" id="pieShortTimeVal">0m</div>
+                            <div class="pie-stat-pct"  id="pieShortTimePct">0%</div>
+                        </div>
+                        <div class="pie-stat-item long-stat">
+                            <div class="pie-stat-label">
+                                <span class="pie-stat-dot long-dot"></span>Long Break
+                            </div>
+                            <div class="pie-stat-time" id="pieLongTimeVal">0m</div>
+                            <div class="pie-stat-pct"  id="pieLongTimePct">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Session History -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Session History</h3>
+                <div class="filter-options">
+                    <select id="sessionFilter" class="session-filter">
+                        <option value="all">All Sessions</option>
+                        <option value="work">Work Sessions</option>
+                        <option value="break">Break Sessions</option>
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="session-list" id="sessionList">
+                    <div class="sk-wrap" aria-busy="true"><span class="sr-only">Loading sessions...</span><div class="sk-row"><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-line sk-w30"></span></div></div><div class="sk-row"><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-line sk-w30"></span></div></div><div class="sk-row"><span class="skeleton sk-circle"></span><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-line sk-w30"></span></div></div></div>
+                </div>
+
+                <!-- Load More Button -->
+                <button class="btn btn-outline btn-block" id="loadMoreBtn" style="display:none;">
+                    Load More Sessions
+                </button>
+            </div>
+        </div>
+
+        <!-- Daily Goals -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Daily Goals</h3>
+                <button class="btn btn-outline" id="editGoalsBtn">Edit Goals</button>
+            </div>
+            <div class="card-body">
+                <div class="goals-grid">
+                    <div class="goal-item" aria-busy="true"><span class="sr-only">Loading goals...</span><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-bar"></span><span class="skeleton sk-line sk-w70"></span></div></div><div class="goal-item" aria-busy="true"><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-bar"></span><span class="skeleton sk-line sk-w70"></span></div></div><div class="goal-item" aria-busy="true"><div class="sk-col"><span class="skeleton sk-line sk-w50"></span><span class="skeleton sk-bar"></span><span class="skeleton sk-line sk-w70"></span></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="goalsModal" class="modal">
+        <div class="modal-content" style="max-width:480px;">
+            <div class="modal-header">
+                <h2>Edit Daily Goals</h2>
+                <button type="button" class="modal-close" id="closeGoalsModal" aria-label="Close dialog"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#x"></use></svg></button>
+            </div>
+            <div class="modal-body">
+
+                <p style="color:#718096; font-size:14px; margin-bottom:25px;">
+                    Set your daily targets. These are used to track your progress each day.
+                </p>
+
+                <div class="form-group">
+                    <label for="goalSessions">
+                        <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg> Sessions Goal
+                        <span style="font-weight:400; color:#a0aec0; font-size:12px;">— How many Pomodoros per day?</span>
+                    </label>
+                    <input type="number" id="goalSessions" min="1" max="50" value="10"
+                        style="width:100%; padding:12px 15px; border:2px solid #e2e8f0;
+                                border-radius:8px; font-size:16px; font-family:inherit;">
+                </div>
+
+                <div class="form-group">
+                    <label for="goalMinutes">
+                        <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#clock"></use></svg> Focus Time Goal (minutes)
+                        <span style="font-weight:400; color:#a0aec0; font-size:12px;">— e.g. 300 = 5 hours</span>
+                    </label>
+                    <input type="number" id="goalMinutes" min="10" max="720" value="300"
+                        style="width:100%; padding:12px 15px; border:2px solid #e2e8f0;
+                                border-radius:8px; font-size:16px; font-family:inherit;">
+                </div>
+
+                <div class="form-group">
+                    <label for="goalTasks">
+                        <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#circle-check"></use></svg> Tasks Goal
+                        <span style="font-weight:400; color:#a0aec0; font-size:12px;">— How many tasks to complete per day?</span>
+                    </label>
+                    <input type="number" id="goalTasks" min="1" max="50" value="5"
+                        style="width:100%; padding:12px 15px; border:2px solid #e2e8f0;
+                                border-radius:8px; font-size:16px; font-family:inherit;">
+                </div>
+
+                <!-- Quick presets -->
+                <div style="margin-bottom:20px;">
+                    <p style="font-size:13px; font-weight:600; color:#4a5568; margin-bottom:10px;">Quick Presets:</p>
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button class="preset-btn" data-sessions="4"  data-minutes="100" data-tasks="2"
+                                onclick="applyPreset(this)">
+                            <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#smile"></use></svg> Light<br><small>4 sessions / 100 min</small>
+                        </button>
+                        <button class="preset-btn" data-sessions="8"  data-minutes="200" data-tasks="4"
+                                onclick="applyPreset(this)">
+                            <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#dumbbell"></use></svg> Moderate<br><small>8 sessions / 200 min</small>
+                        </button>
+                        <button class="preset-btn" data-sessions="12" data-minutes="300" data-tasks="6"
+                                onclick="applyPreset(this)">
+                            <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#flame"></use></svg> Intense<br><small>12 sessions / 300 min</small>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:10px;">
+                    <button class="btn btn-outline" id="cancelGoalsBtn">Cancel</button>
+                    <button class="btn btn-primary" id="saveGoalsBtn">Save Goals</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <script src="js/icons.js"></script>
+    <script src="js/progress.js"></script>
+    <script src="js/darkmode.js"></script>
+    <script src="js/profile_button.js"></script>
+</body>
+</html>

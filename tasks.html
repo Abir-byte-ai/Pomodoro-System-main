@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks - Time Management & Pomodoro Tracker</title>
+    <link rel="icon" type="image/png" href="pomodorotablogo.png">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/tasks.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/darkmode.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <div class="logo">
+            <h2><svg class="ui-icon ui-icon--brand" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#alarm-clock"></use></svg>Pomodoro</h2>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="dashboard.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#layout-dashboard"></use></svg></span>
+                <span>Dashboard</span>
+            </a>
+            <a href="tasks.html" class="nav-item active">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#list-checks"></use></svg></span>
+                <span>Tasks</span>
+            </a>
+            <a href="timer.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#timer"></use></svg></span>
+                <span>Timer</span>
+            </a>
+            <a href="progress.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#chart-no-axes-combined"></use></svg></span>
+                <span>Progress</span>
+            </a>
+            <a href="report.html" class="nav-item">
+                <span class="icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#file-text"></use></svg></span>
+                <span>Reports</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#user-round"></use></svg></div>
+                <div class="user-info">
+                    <p class="user-name">Loading...</p>
+                    <p class="user-email">&nbsp;</p>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#log-out"></use></svg>Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1>My Tasks</h1>
+                <p class="current-date" id="currentDate"></p>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-primary" id="addTaskBtn">
+                    <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#plus"></use></svg> Add New Task
+                </button>
+            </div>
+        </header>
+
+        <!-- Date Range Filter -->
+        <div class="task-date-filter">
+            <div class="date-group">
+                <label for="taskStartDate">From:</label>
+                <input type="date" id="taskStartDate">
+            </div>
+            <div class="date-group">
+                <label for="taskEndDate">To:</label>
+                <input type="date" id="taskEndDate">
+            </div>
+            <button class="btn-apply" id="applyTaskDateRange">Apply</button>
+            <button class="btn-clear" id="clearTaskDateRange">Clear</button>
+            <span class="filter-results-badge" id="filterResultsBadge"></span>
+        </div>
+        
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All Tasks</button>
+            <button class="filter-tab" data-filter="pending">Pending</button>
+            <button class="filter-tab" data-filter="completed">Completed</button>
+        </div>
+
+        <!-- Tasks Summary -->
+        <div class="tasks-summary">
+            <div class="summary-item">
+                <span class="summary-label">Total Tasks:</span>
+                <span class="summary-value" id="totalTasks">0</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Pending:</span>
+                <span class="summary-value pending-count" id="pendingTasks">0</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Completed:</span>
+                <span class="summary-value completed-count" id="completedTasks">0</span>
+            </div>
+        </div>
+
+        <!-- Tasks List -->
+        <div class="card">
+            <div class="card-body">
+                <div id="tasksList" class="tasks-container">
+                    <div class="sk-card" aria-busy="true"><span class="sr-only">Loading tasks...</span><span class="skeleton sk-line lg sk-w50"></span><span class="skeleton sk-line sk-w90"></span><span class="skeleton sk-line sk-w30"></span></div><div class="sk-card" aria-busy="true"><span class="skeleton sk-line lg sk-w50"></span><span class="skeleton sk-line sk-w90"></span><span class="skeleton sk-line sk-w30"></span></div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#clipboard-list"></use></svg></div>
+                    <h3>No tasks found</h3>
+                    <p>Create your first task to get started with productivity tracking</p>
+                    <button class="btn btn-primary" onclick="document.getElementById('addTaskBtn').click()">
+                        <svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#plus"></use></svg> Create Task
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Task Modal -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Task</h2>
+                <button type="button" class="modal-close" id="closeModal" aria-label="Close dialog"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="icons/lucide-sprite.svg#x"></use></svg></button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <input type="hidden" id="taskId" value="">
+                    
+                    <div class="form-group">
+                        <label for="taskTitle">Task Title *</label>
+                        <input type="text" id="taskTitle" placeholder="Enter task title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="taskDescription">Description</label>
+                        <textarea id="taskDescription" rows="4" placeholder="Enter task description"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="taskPriority">Priority *</label>
+                            <select id="taskPriority" required>
+                                <option value="">Select priority</option>
+                                <option value="high">High Priority</option>
+                                <option value="medium">Medium Priority</option>
+                                <option value="low">Low Priority</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="taskDeadline">Deadline</label>
+                            <input type="date" id="taskDeadline">
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/icons.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/darkmode.js"></script>
+    <script src="js/profile_button.js"></script>
+</body>
+</html>
